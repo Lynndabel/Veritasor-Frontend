@@ -49,6 +49,7 @@ export const appRoutes: RouteObject[] = [
       { path: ROUTES.settings, element: <Settings /> },
       { path: ROUTES.apiKeys, element: <ApiKeys /> },
       { path: ROUTES.help, element: <HelpArticle /> },
+      { path: ROUTES.helpArticle, element: <HelpArticle /> },
       { path: ROUTES.consentPreferences, element: <ConsentPreferences /> },
       {
         path: ROUTES.connectSource,
