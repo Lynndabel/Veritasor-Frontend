@@ -1,17 +1,29 @@
 import { test, expect } from './fixtures'
 
 test.describe('Certificate print styles', () => {
-  test.beforeEach(async ({ page }) => {
-    // Navigate to attestations list first to ensure we have data
-    await page.goto('/attestations')
-    await expect(page.getByRole('heading', { name: 'Attestations', level: 1 })).toBeVisible()
-    
+  test('hides navigation and actions in print mode', async ({ page }) => {
+    // Navigate to dashboard
+    await page.goto('/')
+    await expect(page.getByRole('heading', { name: 'Dashboard', level: 1 })).toBeVisible()
+
+    // Open attestation confirmation modal
+    await page.getByRole('button', { name: /trigger monthly revenue report/i }).click()
+    const dialog = page.getByRole('dialog', { name: /confirm revenue attestation/i })
+    await expect(dialog).toBeVisible()
+
+    // Confirm attestation submission
+    await dialog.getByRole('button', { name: /confirm|submit|attest/i }).click()
+    await expect(dialog).toBeHidden()
+    await expect(page.getByText(/attestation submitted successfully/i)).toBeVisible()
+
+    // Navigate to attestations list and verify the run is listed
+    await page.getByRole('link', { name: /view attestation history/i }).click()
+    await expect(page).toHaveURL(/\/attestations/)
+
     // Click on the first attestation to view details
     await page.getByRole('link', { name: /view details/i }).first().click()
     await expect(page).toHaveURL(/\/attestations\/att-\d+/)
-  })
 
-  test('hides navigation and actions in print mode', async ({ page }) => {
     // Wait for the certificate to be visible
     await expect(page.locator('.certificate')).toBeVisible({ timeout: 10000 })
 
@@ -44,6 +56,28 @@ test.describe('Certificate print styles', () => {
   })
 
   test('applies page-break-inside: avoid to key certificate sections', async ({ page }) => {
+    // Navigate to dashboard
+    await page.goto('/')
+    await expect(page.getByRole('heading', { name: 'Dashboard', level: 1 })).toBeVisible()
+
+    // Open attestation confirmation modal
+    await page.getByRole('button', { name: /trigger monthly revenue report/i }).click()
+    const dialog = page.getByRole('dialog', { name: /confirm revenue attestation/i })
+    await expect(dialog).toBeVisible()
+
+    // Confirm attestation submission
+    await dialog.getByRole('button', { name: /confirm|submit|attest/i }).click()
+    await expect(dialog).toBeHidden()
+    await expect(page.getByText(/attestation submitted successfully/i)).toBeVisible()
+
+    // Navigate to attestations list
+    await page.getByRole('link', { name: /view attestation history/i }).click()
+    await expect(page).toHaveURL(/\/attestations/)
+
+    // Click on the first attestation to view details
+    await page.getByRole('link', { name: /view details/i }).first().click()
+    await expect(page).toHaveURL(/\/attestations\/att-\d+/)
+
     // Wait for the certificate to be visible
     await expect(page.locator('.certificate')).toBeVisible({ timeout: 10000 })
 
@@ -74,6 +108,28 @@ test.describe('Certificate print styles', () => {
   })
 
   test('applies page-break-after: avoid to header and title sections', async ({ page }) => {
+    // Navigate to dashboard
+    await page.goto('/')
+    await expect(page.getByRole('heading', { name: 'Dashboard', level: 1 })).toBeVisible()
+
+    // Open attestation confirmation modal
+    await page.getByRole('button', { name: /trigger monthly revenue report/i }).click()
+    const dialog = page.getByRole('dialog', { name: /confirm revenue attestation/i })
+    await expect(dialog).toBeVisible()
+
+    // Confirm attestation submission
+    await dialog.getByRole('button', { name: /confirm|submit|attest/i }).click()
+    await expect(dialog).toBeHidden()
+    await expect(page.getByText(/attestation submitted successfully/i)).toBeVisible()
+
+    // Navigate to attestations list
+    await page.getByRole('link', { name: /view attestation history/i }).click()
+    await expect(page).toHaveURL(/\/attestations/)
+
+    // Click on the first attestation to view details
+    await page.getByRole('link', { name: /view details/i }).first().click()
+    await expect(page).toHaveURL(/\/attestations\/att-\d+/)
+
     // Wait for the certificate to be visible
     await expect(page.locator('.certificate')).toBeVisible({ timeout: 10000 })
 
@@ -103,6 +159,28 @@ test.describe('Certificate print styles', () => {
   })
 
   test('applies page-break-before: avoid to footer sections', async ({ page }) => {
+    // Navigate to dashboard
+    await page.goto('/')
+    await expect(page.getByRole('heading', { name: 'Dashboard', level: 1 })).toBeVisible()
+
+    // Open attestation confirmation modal
+    await page.getByRole('button', { name: /trigger monthly revenue report/i }).click()
+    const dialog = page.getByRole('dialog', { name: /confirm revenue attestation/i })
+    await expect(dialog).toBeVisible()
+
+    // Confirm attestation submission
+    await dialog.getByRole('button', { name: /confirm|submit|attest/i }).click()
+    await expect(dialog).toBeHidden()
+    await expect(page.getByText(/attestation submitted successfully/i)).toBeVisible()
+
+    // Navigate to attestations list
+    await page.getByRole('link', { name: /view attestation history/i }).click()
+    await expect(page).toHaveURL(/\/attestations/)
+
+    // Click on the first attestation to view details
+    await page.getByRole('link', { name: /view details/i }).first().click()
+    await expect(page).toHaveURL(/\/attestations\/att-\d+/)
+
     // Wait for the certificate to be visible
     await expect(page.locator('.certificate')).toBeVisible({ timeout: 10000 })
 
